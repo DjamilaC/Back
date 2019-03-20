@@ -29,6 +29,9 @@ ex: UPDATE fruit SET origine= 'Espagne', calibre ='4', prix ='3.99' WHERE id_fru
 --- Ajouter une colonne a une table ---
 ALTER TABLE nom_de_la_table ADD nom_de_la_colonne;
 
+---Modifier le nom d'une colonne---
+ALTER TABLE nom_de_la_table CHANGE ancien_nom_de_la_colonne nouveau_nom_de_la_colonne VARCHAR(valeur)
+
 --- Operateur de comparaison ---
 = :Egale
 <> :Pas Egale
@@ -50,7 +53,7 @@ SELECT * FROM   bonbons where id_bonbon BETWEEN 2 AND 6;
  afficher les données dans l'ordre decroissant
  SELECT prenom FROM stagiaires where yeux = 'marron' ORDER BY id_stagiaire DESC;
 
- -- Selectionner des données entre (BETWEEN) un interval (fonctionne dans uine requete utilisant WHERE) ---
+ -- Selectionner des données entre (BETWEEN) un interval (fonctionne dans une requete utilisant WHERE) ---
 ex: SELECT * FROM bonbons WHERE id_bonbon BETWEEN 3 and 6
 
 -- AFFicher les données par rapport à une valeur --
