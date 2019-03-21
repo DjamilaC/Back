@@ -1,0 +1,950 @@
+
+Setting environment for using XAMPP for Windows.
+Etudiant@MININT-3IFBDEJ c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 204
+Server version: 10.1.31-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> USE haribot;
+Database changed
+MariaDB [haribot]> SHOW TABLES;
+ERROR 1049 (42000): Unknown database 'haribot'
+MariaDB [haribot]> USE haribo
+Database changed
+MariaDB [haribo]> SHOW TABLES.
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '.' at line 1
+MariaDB [haribo]> SHOW TABLES;
++------------------+
+| Tables_in_haribo |
++------------------+
+| bonbons          |
+| manger           |
+| stagiaires       |
++------------------+
+3 rows in set (0.00 sec)
+
+MariaDB [haribo]> SHOW column_name FROM bonbons;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'column_name FROM bonbons' at line 1
+MariaDB [haribo]> SHOW 'column_name' FROM bonbons;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''column_name' FROM bonbons' at line 1
+MariaDB [haribo]> SELECT syscolumn.name FROM bonbons;
+ERROR 1054 (42S22): Unknown column 'syscolumn.name' in 'field list'
+MariaDB [haribo]> SELECT syscolumns.name FROM bonbons;
+ERROR 1054 (42S22): Unknown column 'syscolumns.name' in 'field list'
+MariaDB [haribo]> SHOW COLUMNS from bonbons;
++-----------+--------------+------+-----+---------+----------------+
+| Field     | Type         | Null | Key | Default | Extra          |
++-----------+--------------+------+-----+---------+----------------+
+| id_bonbon | int(11)      | NO   | PRI | NULL    | auto_increment |
+| nom       | varchar(100) | NO   |     | NULL    |                |
+| saveur    | varchar(100) | NO   |     | NULL    |                |
++-----------+--------------+------+-----+---------+----------------+
+3 rows in set (0.01 sec)
+
+MariaDB [haribo]> SELECT * FROM stagiaires;
++--------------+-----------+--------+-------+
+| id_stagiaire | prenom    | yeux   | genre |
++--------------+-----------+--------+-------+
+|            1 | jhordan   | marron | h     |
+|            2 | Layla     | marron | f     |
+|            3 | Luc       | marron | h     |
+|            4 | Sabuj     | marron | h     |
+|            5 | Mohamed   | marron | h     |
+|            6 | Johnathan | bleu   | h     |
+|            7 | Arnaud    | marron | h     |
+|           11 | Mila      | vert   | f     |
++--------------+-----------+--------+-------+
+8 rows in set (0.00 sec)
+
+MariaDB [haribo]> INSERT INTO stagiaires(id_stagiaire, prenom, yeux, genre) VALUES('patriiik');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+MariaDB [haribo]> INSERT INTO stagiaires(prenom) VALUES('patriiik');
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+MariaDB [haribo]> SELECT*FROM stagiaires;
++--------------+-----------+--------+-------+
+| id_stagiaire | prenom    | yeux   | genre |
++--------------+-----------+--------+-------+
+|            1 | jhordan   | marron | h     |
+|            2 | Layla     | marron | f     |
+|            3 | Luc       | marron | h     |
+|            4 | Sabuj     | marron | h     |
+|            5 | Mohamed   | marron | h     |
+|            6 | Johnathan | bleu   | h     |
+|            7 | Arnaud    | marron | h     |
+|           11 | Mila      | vert   | f     |
+|           12 | patriiik  |        | h     |
++--------------+-----------+--------+-------+
+9 rows in set (0.00 sec)
+
+MariaDB [haribo]> INSERT INTO stagiaires(id_stagiaire, prenom) VALUES('14', 'Mila');
+Query OK, 1 row affected, 1 warning (0.01 sec)
+
+MariaDB [haribo]> SELECT*FROM stagiaires;
++--------------+-----------+--------+-------+
+| id_stagiaire | prenom    | yeux   | genre |
++--------------+-----------+--------+-------+
+|            1 | jhordan   | marron | h     |
+|            2 | Layla     | marron | f     |
+|            3 | Luc       | marron | h     |
+|            4 | Sabuj     | marron | h     |
+|            5 | Mohamed   | marron | h     |
+|            6 | Johnathan | bleu   | h     |
+|            7 | Arnaud    | marron | h     |
+|           11 | Mila      | vert   | f     |
+|           12 | patriiik  |        | h     |
+|           14 | Mila      |        | h     |
++--------------+-----------+--------+-------+
+10 rows in set (0.00 sec)
+
+MariaDB [haribo]> UPDATE TABLE stagiaires SET genre = 'f';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'TABLE stagiaires SET genre = 'f'' at line 1
+MariaDB [haribo]> UPDATE TABLE stagiaires SET genre = 'f' WHERE id_stagaire = 14;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'TABLE stagiaires SET genre = 'f' WHERE id_stagaire = 14' at line 1
+MariaDB [haribo]> UPDATE stagiaires SET genre = 'f' WHERE id_stagaire = 14;
+ERROR 1054 (42S22): Unknown column 'id_stagaire' in 'where clause'
+MariaDB [haribo]> UPDATE stagiaires SET genre = 'f' WHERE id_stagaire = '14';
+ERROR 1054 (42S22): Unknown column 'id_stagaire' in 'where clause'
+MariaDB [haribo]> UPDATE stagiaires SET genre = 'f' WHERE id_stagiaire = '14';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [haribo]> SELECT*FROM stagiaires;
++--------------+-----------+--------+-------+
+| id_stagiaire | prenom    | yeux   | genre |
++--------------+-----------+--------+-------+
+|            1 | jhordan   | marron | h     |
+|            2 | Layla     | marron | f     |
+|            3 | Luc       | marron | h     |
+|            4 | Sabuj     | marron | h     |
+|            5 | Mohamed   | marron | h     |
+|            6 | Johnathan | bleu   | h     |
+|            7 | Arnaud    | marron | h     |
+|           11 | Mila      | vert   | f     |
+|           12 | patriiik  |        | h     |
+|           14 | Mila      |        | f     |
++--------------+-----------+--------+-------+
+10 rows in set (0.00 sec)
+
+MariaDB [haribo]> UPDATE stagiaires set prenom = 'patrick' WHERE id_stagiaire = '12';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [haribo]> SELECT*FROM stagiaires;
++--------------+-----------+--------+-------+
+| id_stagiaire | prenom    | yeux   | genre |
++--------------+-----------+--------+-------+
+|            1 | jhordan   | marron | h     |
+|            2 | Layla     | marron | f     |
+|            3 | Luc       | marron | h     |
+|            4 | Sabuj     | marron | h     |
+|            5 | Mohamed   | marron | h     |
+|            6 | Johnathan | bleu   | h     |
+|            7 | Arnaud    | marron | h     |
+|           11 | Mila      | vert   | f     |
+|           12 | patrick   |        | h     |
+|           14 | Mila      |        | f     |
++--------------+-----------+--------+-------+
+10 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT*FROM manger;
++-----------+-----------+--------------+-------------+----------+
+| id_manger | id_bonbon | id_stagiaire | date_manger | quantite |
++-----------+-----------+--------------+-------------+----------+
+|         1 |         4 |            7 | 2018-09-20  |        5 |
+|         2 |         2 |            4 | 2018-09-10  |       10 |
+|         3 |         3 |            1 | 2018-09-18  |        5 |
+|         4 |         2 |            2 | 2018-09-05  |       18 |
+|         5 |         4 |            3 | 2018-09-01  |       18 |
+|         6 |         5 |            6 | 2018-08-25  |       24 |
+|         7 |         4 |            1 | 2018-06-10  |       12 |
+|         8 |         4 |            5 | 2018-07-24  |        5 |
++-----------+-----------+--------------+-------------+----------+
+8 rows in set (0.00 sec)
+
+MariaDB [haribo]> INSERT INTO manger(id_stagiaire, date_manger, quantite) VALUES('12', '2018-09-15');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+MariaDB [haribo]> INSERT INTO manger(id_stagiaire, date_manger, quantite) VALUES('12', '2018-09-15', '5');
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [haribo]> SELECT*FROM manger;
++-----------+-----------+--------------+-------------+----------+
+| id_manger | id_bonbon | id_stagiaire | date_manger | quantite |
++-----------+-----------+--------------+-------------+----------+
+|         1 |         4 |            7 | 2018-09-20  |        5 |
+|         2 |         2 |            4 | 2018-09-10  |       10 |
+|         3 |         3 |            1 | 2018-09-18  |        5 |
+|         4 |         2 |            2 | 2018-09-05  |       18 |
+|         5 |         4 |            3 | 2018-09-01  |       18 |
+|         6 |         5 |            6 | 2018-08-25  |       24 |
+|         7 |         4 |            1 | 2018-06-10  |       12 |
+|         8 |         4 |            5 | 2018-07-24  |        5 |
+|         9 |      NULL |           12 | 2018-09-15  |        5 |
++-----------+-----------+--------------+-------------+----------+
+9 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT*FROM bonbons;
++-----------+------------+-----------+
+| id_bonbon | nom        | saveur    |
++-----------+------------+-----------+
+|         1 | dragibus   | cola      |
+|         2 | Tagada     | fraise    |
+|         3 | nounours   | citron    |
+|         4 | chamallow  | framboise |
+|         5 | schtroumpf | acidulé   |
+|         6 | chamallow  | vanille   |
++-----------+------------+-----------+
+6 rows in set (0.00 sec)
+
+MariaDB [haribo]> UPDATE manger set id_bonbon = '2' WHERE id_manger = '9';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [haribo]> SELECT*FROM manger;
++-----------+-----------+--------------+-------------+----------+
+| id_manger | id_bonbon | id_stagiaire | date_manger | quantite |
++-----------+-----------+--------------+-------------+----------+
+|         1 |         4 |            7 | 2018-09-20  |        5 |
+|         2 |         2 |            4 | 2018-09-10  |       10 |
+|         3 |         3 |            1 | 2018-09-18  |        5 |
+|         4 |         2 |            2 | 2018-09-05  |       18 |
+|         5 |         4 |            3 | 2018-09-01  |       18 |
+|         6 |         5 |            6 | 2018-08-25  |       24 |
+|         7 |         4 |            1 | 2018-06-10  |       12 |
+|         8 |         4 |            5 | 2018-07-24  |        5 |
+|         9 |         2 |           12 | 2018-09-15  |        5 |
++-----------+-----------+--------------+-------------+----------+
+9 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT nom FROM bonbons;
++------------+
+| nom        |
++------------+
+| dragibus   |
+| Tagada     |
+| nounours   |
+| chamallow  |
+| schtroumpf |
+| chamallow  |
++------------+
+6 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT DISTINCT nom FROM bonbons;
++------------+
+| nom        |
++------------+
+| dragibus   |
+| Tagada     |
+| nounours   |
+| chamallow  |
+| schtroumpf |
++------------+
+5 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT*FROM stagiaires;
++--------------+-----------+--------+-------+
+| id_stagiaire | prenom    | yeux   | genre |
++--------------+-----------+--------+-------+
+|            1 | jhordan   | marron | h     |
+|            2 | Layla     | marron | f     |
+|            3 | Luc       | marron | h     |
+|            4 | Sabuj     | marron | h     |
+|            5 | Mohamed   | marron | h     |
+|            6 | Johnathan | bleu   | h     |
+|            7 | Arnaud    | marron | h     |
+|           11 | Mila      | vert   | f     |
+|           12 | patrick   |        | h     |
+|           14 | Mila      |        | f     |
++--------------+-----------+--------+-------+
+10 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT yeux FROM stagiaires;
++--------+
+| yeux   |
++--------+
+| marron |
+| marron |
+| marron |
+| marron |
+| marron |
+| bleu   |
+| marron |
+| vert   |
+|        |
+|        |
++--------+
+10 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT DISTINCT yeux FROM stagiaires;
++--------+
+| yeux   |
++--------+
+| marron |
+| bleu   |
+| vert   |
+|        |
++--------+
+4 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT prenom FROM stagiaires WHERE id_stagiaire = '5';
++---------+
+| prenom  |
++---------+
+| Mohamed |
++---------+
+1 row in set (0.00 sec)
+
+MariaDB [haribo]> SELECT prenom FROM stagiaires WHERE yeux = 'marron';
++---------+
+| prenom  |
++---------+
+| jhordan |
+| Layla   |
+| Luc     |
+| Sabuj   |
+| Mohamed |
+| Arnaud  |
++---------+
+6 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT prenom FROM stagiaires WHERE id_stagiaire > 9;
++---------+
+| prenom  |
++---------+
+| Mila    |
+| patrick |
+| Mila    |
++---------+
+3 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT nom FROM stagaires WHERE id_stagaire != '13';
+ERROR 1146 (42S02): Table 'haribo.stagaires' doesn't exist
+MariaDB [haribo]> SELECT nom FROM stagiaires WHERE id_stagaire != '13';
+ERROR 1054 (42S22): Unknown column 'nom' in 'field list'
+MariaDB [haribo]> SELECT nom FROM stagiaires WHERE id_stagaire != (13);
+ERROR 1054 (42S22): Unknown column 'nom' in 'field list'
+MariaDB [haribo]> SELECT nom FROM stagiaires WHERE id_stagaire<>(13);
+ERROR 1054 (42S22): Unknown column 'nom' in 'field list'
+MariaDB [haribo]> SELECT prenom FROM stagiaires WHERE id_stagaire<>(13);
+ERROR 1054 (42S22): Unknown column 'id_stagaire' in 'where clause'
+MariaDB [haribo]> SELECT prenom FROM stagiaires WHERE id_stagiaire<>(13);
++-----------+
+| prenom    |
++-----------+
+| jhordan   |
+| Layla     |
+| Luc       |
+| Sabuj     |
+| Mohamed   |
+| Johnathan |
+| Arnaud    |
+| Mila      |
+| patrick   |
+| Mila      |
++-----------+
+10 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT prenom FROM stagiaires WHERE id_stagiaire <=10;
++-----------+
+| prenom    |
++-----------+
+| jhordan   |
+| Layla     |
+| Luc       |
+| Sabuj     |
+| Mohamed   |
+| Johnathan |
+| Arnaud    |
++-----------+
+7 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT prenom FROM stagiaires WHERE id_stagiaire BETWEEN 7 AND 11;
++--------+
+| prenom |
++--------+
+| Arnaud |
+| Mila   |
++--------+
+2 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT prenom FROM stagiaires WHERE prenom LIKE 's%';
++--------+
+| prenom |
++--------+
+| Sabuj  |
++--------+
+1 row in set (0.00 sec)
+
+MariaDB [haribo]>
+MariaDB [haribo]> SELECT prenom FROM stagiaires WHERE sexe = 'f' AND id_stagiaire DESC;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'DESC' at line 1
+MariaDB [haribo]> SELECT prenom FROM stagiaires WHERE sexe = 'f' ORDER BY id_stagiaire DESC;
+ERROR 1054 (42S22): Unknown column 'sexe' in 'where clause'
+MariaDB [haribo]> SELECT prenom FROM stagiaires ORDER BY id_stagiaire DESC WHERE sexe = 'f';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'WHERE sexe = 'f'' at line 1
+MariaDB [haribo]> SELECT prenom FROM, stagiaires ORDER BY id_stagiaire DESC WHERE sexe = 'f';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ' stagiaires ORDER BY id_stagiaire DESC WHERE sexe = 'f'' at line 1
+MariaDB [haribo]> SELECT prenom FROM, stagiaires ORDER BY id_stagiaire DESC WHERE genre = 'f';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ' stagiaires ORDER BY id_stagiaire DESC WHERE genre = 'f'' at line 1
+MariaDB [haribo]> SELECT prenom FROM stagiaires ORDER BY id_stagiaire DESC WHERE genre = 'f';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'WHERE genre = 'f'' at line 1
+MariaDB [haribo]> SELECT prenom FROM stagiaires, ORDER BY id_stagiaire DESC WHERE genre = 'f';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'ORDER BY id_stagiaire DESC WHERE genre = 'f'' at line 1
+MariaDB [haribo]> SELECT prenom FROM stagiaires ORDER BY id_stagiaire DESC WHERE genre = 'f';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'WHERE genre = 'f'' at line 1
+MariaDB [haribo]> SELECT prenom FROM stagiaires WHERE genre = 'f', ORDER BY id_stagiaire DESC;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ' ORDER BY id_stagiaire DESC' at line 1
+MariaDB [haribo]> SELECT prenom FROM stagiaires WHERE genre = 'f' ORDER BY id_stagiaire DESC;
++--------+
+| prenom |
++--------+
+| Mila   |
+| Mila   |
+| Layla  |
++--------+
+3 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT id_stagiaire, prenom FROM stagiaires WHERE genre = 'f' ORDER BY id_stagiaire DESC;
++--------------+--------+
+| id_stagiaire | prenom |
++--------------+--------+
+|           14 | Mila   |
+|           11 | Mila   |
+|            2 | Layla  |
++--------------+--------+
+3 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT prenom FROM stagiaires WHERE genre = 'h' ORDER BY prenom;
++-----------+
+| prenom    |
++-----------+
+| Arnaud    |
+| jhordan   |
+| Johnathan |
+| Luc       |
+| Mohamed   |
+| patrick   |
+| Sabuj     |
++-----------+
+7 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT prenom FROM stagiaires WHERE genre = 'h' ORDER BY genre ORDER BY yeux;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'ORDER BY yeux' at line 1
+MariaDB [haribo]> SELECT prenom FROM stagiaires WHERE genre = 'h' ORDER BY genre, ORDER BY yeux;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'ORDER BY yeux' at line 1
+MariaDB [haribo]> SELECT prenom FROM stagiaires WHERE genre = 'h' ORDER BY yeux;
++-----------+
+| prenom    |
++-----------+
+| patrick   |
+| Johnathan |
+| jhordan   |
+| Luc       |
+| Sabuj     |
+| Mohamed   |
+| Arnaud    |
++-----------+
+7 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT prenom, yeux, genre FROM stagiaires ORDER BY genre ORDER BY yeux;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'ORDER BY yeux' at line 1
+MariaDB [haribo]> SELECT prenom, yeux, genre FROM stagiaires ORDER BY yeux;
++-----------+--------+-------+
+| prenom    | yeux   | genre |
++-----------+--------+-------+
+| Mila      |        | f     |
+| patrick   |        | h     |
+| Johnathan | bleu   | h     |
+| Sabuj     | marron | h     |
+| Mohamed   | marron | h     |
+| Luc       | marron | h     |
+| Arnaud    | marron | h     |
+| Layla     | marron | f     |
+| jhordan   | marron | h     |
+| Mila      | vert   | f     |
++-----------+--------+-------+
+10 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT prenom, yeux, genre FROM stagiaires ORDER BY genre AND ORDER BY yeux ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'ORDER BY yeux' at line 1
+MariaDB [haribo]> SELECT prenom, yeux, genre FROM stagiaires ORDER BY genre, ORDER BY yeux ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'ORDER BY yeux' at line 1
+MariaDB [haribo]> SELECT prenom, yeux, genre FROM stagiaires ORDER BY genre ORDER BY yeux ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'ORDER BY yeux' at line 1
+MariaDB [haribo]> SELECT prenom, yeux, genre FROM stagiaires ORDER BYGROUP BY genre ORDER BY yeux ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'BYGROUP BY genre ORDER BY yeux' at line 1
+MariaDB [haribo]> SELECT prenom, yeux, genre FROM stagiaires ORDER BY GROUP BY genre ORDER BY yeux ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'GROUP BY genre ORDER BY yeux' at line 1
+MariaDB [haribo]> SELECT prenom, yeux, genre FROM stagiaires GROUP BY ORDER BY genre ORDER BY yeux ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'ORDER BY genre ORDER BY yeux' at line 1
+MariaDB [haribo]> SELECT prenom FROM stagiaires LIMIT 3.
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '3.' at line 1
+MariaDB [haribo]> SELECT prenom FROM stagiaires LIMIT 3;
++---------+
+| prenom  |
++---------+
+| jhordan |
+| Layla   |
+| Luc     |
++---------+
+3 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT prenom FROM stagiaires LIMIT 2,5;
++-----------+
+| prenom    |
++-----------+
+| Luc       |
+| Sabuj     |
+| Mohamed   |
+| Johnathan |
+| Arnaud    |
++-----------+
+5 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT prenom, yeux, genre FROM stagiaires GROUP BY ORDER BY genre, yeux ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'ORDER BY genre, yeux' at line 1
+MariaDB [haribo]> SELECT prenom, yeux, genre FROM stagiaires ORDER BY genre DESC? yeux;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '? yeux' at line 1
+MariaDB [haribo]> SELECT prenom, yeux, genre FROM stagiaires ORDER BY genre DESC, yeux;
++-----------+--------+-------+
+| prenom    | yeux   | genre |
++-----------+--------+-------+
+| Mila      |        | f     |
+| Layla     | marron | f     |
+| Mila      | vert   | f     |
+| patrick   |        | h     |
+| Johnathan | bleu   | h     |
+| Mohamed   | marron | h     |
+| Arnaud    | marron | h     |
+| Sabuj     | marron | h     |
+| Luc       | marron | h     |
+| jhordan   | marron | h     |
++-----------+--------+-------+
+10 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT prenom FROM stagiaires WHERE yeux = 'marron' LIMIT 4;
++---------+
+| prenom  |
++---------+
+| jhordan |
+| Layla   |
+| Luc     |
+| Sabuj   |
++---------+
+4 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT prenom FROM stagiaires WHERE yeux = 'marron' LIMIT 4 ORDER BY prenom;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'ORDER BY prenom' at line 1
+MariaDB [haribo]> SELECT prenom FROM stagiaires WHERE yeux = 'marron' ORDER BY prenom LIMIT 4;
++---------+
+| prenom  |
++---------+
+| Arnaud  |
+| jhordan |
+| Layla   |
+| Luc     |
++---------+
+4 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT COUNT prenom;
+ERROR 1054 (42S22): Unknown column 'COUNT' in 'field list'
+MariaDB [haribo]> SELECT COUNT prenom FROM stagiaires;
+ERROR 1054 (42S22): Unknown column 'COUNT' in 'field list'
+MariaDB [haribo]> SELECT COUNT (prenom) FROM stagiaires;
+ERROR 1630 (42000): FUNCTION haribo.COUNT does not exist. Check the 'Function Name Parsing and Resolution' section in the Reference Manual
+MariaDB [haribo]> SELECT COUNT(prenom) FROM stagiaires;
++---------------+
+| COUNT(prenom) |
++---------------+
+|            10 |
++---------------+
+1 row in set (0.00 sec)
+
+MariaDB [haribo]> SELECT COUNT(prenom) AS nb_stagiaires_H FROM stagiaires WHERE genre = 'h';
++-----------------+
+| nb_stagiaires_H |
++-----------------+
+|               7 |
++-----------------+
+1 row in set (0.00 sec)
+
+MariaDB [haribo]> SELECT DISTINCT yeux FROM stagiaires;
++--------+
+| yeux   |
++--------+
+| marron |
+| bleu   |
+| vert   |
+|        |
++--------+
+4 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT prenom, id_stagiaire FROM stagiaires WHERE min(id_stagiaire);
+ERROR 1111 (HY000): Invalid use of group function
+MariaDB [haribo]> SELECT prenom, id_stagiaire FROM stagiaires WHERE id_stagiaire = ' min(id_stagiaire)';
+Empty set (0.00 sec)
+
+MariaDB [haribo]> SELECT prenom, id_stagiaire FROM stagiaires WHERE id_stagiaire =  min(id_stagiaire);
+ERROR 1111 (HY000): Invalid use of group function
+MariaDB [haribo]> SELECT prenom, id_stagiaire FROM stagiaires WHERE id_stagiaire =  MIN(id_stagiaire);
+ERROR 1111 (HY000): Invalid use of group function
+MariaDB [haribo]> SELECT prenom, MIN(id_stagiaire) FROM stagiaires;
++---------+-------------------+
+| prenom  | MIN(id_stagiaire) |
++---------+-------------------+
+| jhordan |                 1 |
++---------+-------------------+
+1 row in set (0.00 sec)
+
+MariaDB [haribo]> SELECT prenom, yeux, MAX(id_stagiaire) FROM stagiaires;
++---------+--------+-------------------+
+| prenom  | yeux   | MAX(id_stagiaire) |
++---------+--------+-------------------+
+| jhordan | marron |                14 |
++---------+--------+-------------------+
+1 row in set (0.00 sec)
+
+MariaDB [haribo]> SELECT prenom, yeux FROM stagiaires WHERE yeux = 'bleu', 'vert';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ' 'vert'' at line 1
+MariaDB [haribo]> SELECT prenom, yeux FROM stagiaires WHERE yeux = 'bleu' AND 'bleu';
+Empty set, 4 warnings (0.00 sec)
+
+MariaDB [haribo]> SELECT prenom, yeux FROM stagiaires WHERE yeux = 'bleu, vert';
+Empty set (0.00 sec)
+
+MariaDB [haribo]> SELECT prenom, yeux FROM stagiaires WHERE yeux IN (vert, bleu);
+ERROR 1054 (42S22): Unknown column 'vert' in 'where clause'
+MariaDB [haribo]> SELECT prenom, yeux FROM stagiaires WHERE yeux IN ('vert', 'bleu');
++-----------+------+
+| prenom    | yeux |
++-----------+------+
+| Johnathan | bleu |
+| Mila      | vert |
++-----------+------+
+2 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT prenom, yeux FROM stagiaires WHERE yeux NOT IN ('vert', 'bleu');
++---------+--------+
+| prenom  | yeux   |
++---------+--------+
+| jhordan | marron |
+| Layla   | marron |
+| Luc     | marron |
+| Sabuj   | marron |
+| Mohamed | marron |
+| Arnaud  | marron |
+| patrick |        |
+| Mila    |        |
++---------+--------+
+8 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT id_stagiaire yeux FROM bonbons;
+ERROR 1054 (42S22): Unknown column 'id_stagiaire' in 'field list'
+MariaDB [haribo]> SELECT *FROM bonbons;
++-----------+------------+-----------+
+| id_bonbon | nom        | saveur    |
++-----------+------------+-----------+
+|         1 | dragibus   | cola      |
+|         2 | Tagada     | fraise    |
+|         3 | nounours   | citron    |
+|         4 | chamallow  | framboise |
+|         5 | schtroumpf | acidulé   |
+|         6 | chamallow  | vanille   |
++-----------+------------+-----------+
+6 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT prenom FROM stagiaires INNER JOIN bonbons WHERE stagiaires.id_bonbon = bonbons.id_bonbon ;
+ERROR 1054 (42S22): Unknown column 'stagiaires.id_bonbon' in 'where clause'
+MariaDB [haribo]> SELECT prenom FROM stagiaires INNER JOIN bonbons INNER JOIN manger WHERE stagiaires.id_bonbon = bonbons.id_bonbon ;
+ERROR 1054 (42S22): Unknown column 'stagiaires.id_bonbon' in 'where clause'
+MariaDB [haribo]>
+MariaDB [haribo]> SELECT prenom FROM stagiaires INNER JOIN bonbons INNER JOIN manger WHERE stagiaires.id_bonbon = bonbons.id_bonbon AND  ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+MariaDB [haribo]> SELECT*FROM stagiaires;
++--------------+-----------+--------+-------+
+| id_stagiaire | prenom    | yeux   | genre |
++--------------+-----------+--------+-------+
+|            1 | jhordan   | marron | h     |
+|            2 | Layla     | marron | f     |
+|            3 | Luc       | marron | h     |
+|            4 | Sabuj     | marron | h     |
+|            5 | Mohamed   | marron | h     |
+|            6 | Johnathan | bleu   | h     |
+|            7 | Arnaud    | marron | h     |
+|           11 | Mila      | vert   | f     |
+|           12 | patrick   |        | h     |
+|           14 | Mila      |        | f     |
++--------------+-----------+--------+-------+
+10 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT*FROM bonbons;
++-----------+------------+-----------+
+| id_bonbon | nom        | saveur    |
++-----------+------------+-----------+
+|         1 | dragibus   | cola      |
+|         2 | Tagada     | fraise    |
+|         3 | nounours   | citron    |
+|         4 | chamallow  | framboise |
+|         5 | schtroumpf | acidulé   |
+|         6 | chamallow  | vanille   |
++-----------+------------+-----------+
+6 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT*FROM manger;
++-----------+-----------+--------------+-------------+----------+
+| id_manger | id_bonbon | id_stagiaire | date_manger | quantite |
++-----------+-----------+--------------+-------------+----------+
+|         1 |         4 |            7 | 2018-09-20  |        5 |
+|         2 |         2 |            4 | 2018-09-10  |       10 |
+|         3 |         3 |            1 | 2018-09-18  |        5 |
+|         4 |         2 |            2 | 2018-09-05  |       18 |
+|         5 |         4 |            3 | 2018-09-01  |       18 |
+|         6 |         5 |            6 | 2018-08-25  |       24 |
+|         7 |         4 |            1 | 2018-06-10  |       12 |
+|         8 |         4 |            5 | 2018-07-24  |        5 |
+|         9 |         2 |           12 | 2018-09-15  |        5 |
++-----------+-----------+--------------+-------------+----------+
+9 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT prenom FROM stagiaires INNER JOIN bonbons INNER JOIN manger WHERE manger.id_bonbon = bonbons.id_bonbon ;
++-----------+
+| prenom    |
++-----------+
+| jhordan   |
+| jhordan   |
+| jhordan   |
+| jhordan   |
+| jhordan   |
+| jhordan   |
+| jhordan   |
+| jhordan   |
+| jhordan   |
+| Layla     |
+| Layla     |
+| Layla     |
+| Layla     |
+| Layla     |
+| Layla     |
+| Layla     |
+| Layla     |
+| Layla     |
+| Luc       |
+| Luc       |
+| Luc       |
+| Luc       |
+| Luc       |
+| Luc       |
+| Luc       |
+| Luc       |
+| Luc       |
+| Sabuj     |
+| Sabuj     |
+| Sabuj     |
+| Sabuj     |
+| Sabuj     |
+| Sabuj     |
+| Sabuj     |
+| Sabuj     |
+| Sabuj     |
+| Mohamed   |
+| Mohamed   |
+| Mohamed   |
+| Mohamed   |
+| Mohamed   |
+| Mohamed   |
+| Mohamed   |
+| Mohamed   |
+| Mohamed   |
+| Johnathan |
+| Johnathan |
+| Johnathan |
+| Johnathan |
+| Johnathan |
+| Johnathan |
+| Johnathan |
+| Johnathan |
+| Johnathan |
+| Arnaud    |
+| Arnaud    |
+| Arnaud    |
+| Arnaud    |
+| Arnaud    |
+| Arnaud    |
+| Arnaud    |
+| Arnaud    |
+| Arnaud    |
+| Mila      |
+| Mila      |
+| Mila      |
+| Mila      |
+| Mila      |
+| Mila      |
+| Mila      |
+| Mila      |
+| Mila      |
+| patrick   |
+| patrick   |
+| patrick   |
+| patrick   |
+| patrick   |
+| patrick   |
+| patrick   |
+| patrick   |
+| patrick   |
+| Mila      |
+| Mila      |
+| Mila      |
+| Mila      |
+| Mila      |
+| Mila      |
+| Mila      |
+| Mila      |
+| Mila      |
++-----------+
+90 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT prenom FROM stagiaires INNER JOIN bonbons INNER JOIN manger WHERE manger.id_bonbon = bonbons.id_bonbon AND manger.id_stagiaire = stagiaires.id_stagiaire ;
++-----------+
+| prenom    |
++-----------+
+| Arnaud    |
+| Sabuj     |
+| jhordan   |
+| Layla     |
+| Luc       |
+| Johnathan |
+| jhordan   |
+| Mohamed   |
+| patrick   |
++-----------+
+9 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT prenom, id_bonbon FROM stagiaires  INNER JOIN bonbons INNER JOIN manger WHERE manger.id_bonbon = bonbons.id_bonbon AND manger.id_stagiaire = stagiaires.id_stagiaire ;
+ERROR 1052 (23000): Column 'id_bonbon' in field list is ambiguous
+MariaDB [haribo]> SELECT prenom FROM stagiaires, nom FROM bonbons  INNER JOIN bonbons INNER JOIN manger WHERE manger.id_bonbon = bonbons.id_bonbon AND manger.id_stagiaire = stagiaires.id_stagiaire ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'FROM bonbons  INNER JOIN bonbons INNER JOIN manger WHERE manger.id_bonbon = bonb' at line 1
+MariaDB [haribo]> SELECT prenom, nom, date_manger FROM stagiaires, INNER JOIN bonbons INNER JOIN manger WHERE manger.id_bonbon = bonbons.id_bonbon AND manger.id_stagiaire = stagiaires.id_stagiaire ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'INNER JOIN bonbons INNER JOIN manger WHERE manger.id_bonbon = bonbons.id_bonbon ' at line 1
+MariaDB [haribo]> SELECT prenom, nom, date_manger FROM stagiaires INNER JOIN bonbons INNER JOIN manger WHERE manger.id_bonbon = bonbons.id_bonbon AND manger.id_stagiaire = stagiaires.id_stagiaire ;
++-----------+------------+-------------+
+| prenom    | nom        | date_manger |
++-----------+------------+-------------+
+| Sabuj     | Tagada     | 2018-09-10  |
+| Layla     | Tagada     | 2018-09-05  |
+| patrick   | Tagada     | 2018-09-15  |
+| jhordan   | nounours   | 2018-09-18  |
+| Arnaud    | chamallow  | 2018-09-20  |
+| Luc       | chamallow  | 2018-09-01  |
+| jhordan   | chamallow  | 2018-06-10  |
+| Mohamed   | chamallow  | 2018-07-24  |
+| Johnathan | schtroumpf | 2018-08-25  |
++-----------+------------+-------------+
+9 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT prenom, nom, date_manger FROM stagiaires INNER JOIN bonbons INNER JOIN manger WHERE manger.id_bonbon = bonbons.id_bonbon AND manger.id_stagiaire = stagiaires.id_stagiaire ;
++-----------+------------+-------------+
+| prenom    | nom        | date_manger |
++-----------+------------+-------------+
+| Sabuj     | Tagada     | 2018-09-10  |
+| Layla     | Tagada     | 2018-09-05  |
+| patrick   | Tagada     | 2018-09-15  |
+| jhordan   | nounours   | 2018-09-18  |
+| Arnaud    | chamallow  | 2018-09-20  |
+| Luc       | chamallow  | 2018-09-01  |
+| jhordan   | chamallow  | 2018-06-10  |
+| Mohamed   | chamallow  | 2018-07-24  |
+| Johnathan | schtroumpf | 2018-08-25  |
++-----------+------------+-------------+
+9 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT quantite FROM manger
+    -> SELECT prenom, nom, quantite FROM stagiaires INNER JOIN bonbons INNER JOIN manger WHERE manger.id_bonbon = bonbons.id_bonbon AND manger.id_stagiaire = stagiaires.id_stagiaire ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'SELECT prenom, nom, quantite FROM stagiaires INNER JOIN bonbons INNER JOIN mange' at line 2
+MariaDB [haribo]> SELECT prenom, nom, quantite FROM stagiaires INNER JOIN bonbons INNER JOIN manger WHERE manger.id_bonbon = bonbons.id_bonbon AND manger.id_stagiaire = stagiaires.id_stagiaire ;
++-----------+------------+----------+
+| prenom    | nom        | quantite |
++-----------+------------+----------+
+| Sabuj     | Tagada     |       10 |
+| Layla     | Tagada     |       18 |
+| patrick   | Tagada     |        5 |
+| jhordan   | nounours   |        5 |
+| Arnaud    | chamallow  |        5 |
+| Luc       | chamallow  |       18 |
+| jhordan   | chamallow  |       12 |
+| Mohamed   | chamallow  |        5 |
+| Johnathan | schtroumpf |       24 |
++-----------+------------+----------+
+9 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT COUNT(quantite) FROM stagiaires INNER JOIN bonbons INNER JOIN manger WHERE manger.id_bonbon = bonbons.id_bonbon AND manger.id_stagiaire = stagiaires.id_stagiaire ;
++-----------------+
+| COUNT(quantite) |
++-----------------+
+|               9 |
++-----------------+
+1 row in set (0.00 sec)
+
+MariaDB [haribo]> SELECT SUM(quantite) FROM stagiaires INNER JOIN bonbons INNER JOIN manger WHERE manger.id_bonbon = bonbons.id_bonbon AND manger.id_stagiaire = stagiaires.id_stagiaire ;
++---------------+
+| SUM(quantite) |
++---------------+
+|           102 |
++---------------+
+1 row in set (0.00 sec)
+
+MariaDB [haribo]> SELECT SUM(quantite) FROM bonbons WHERE nom ='tagada';
+ERROR 1054 (42S22): Unknown column 'quantite' in 'field list'
+MariaDB [haribo]> SELECT SUM(quantite) FROM stagiaires INNER JOIN bonbons INNER JOIN manger WHERE manger.id_bonbon = bonbons.id_bonbon AND manger.id_stagiaire = stagiaires.id_stagiaire AND nom = 'tagada' ;
++---------------+
+| SUM(quantite) |
++---------------+
+|            33 |
++---------------+
+1 row in set (0.00 sec)
+
+MariaDB [haribo]> SELECT saveur FROM stagiaires INNER JOIN bonbons INNER JOIN manger WHERE manger.id_bonbon = bonbons.id_bonbon AND manger.id_stagiaire = stagiaires.id_stagiaire ;
++-----------+
+| saveur    |
++-----------+
+| fraise    |
+| fraise    |
+| fraise    |
+| citron    |
+| framboise |
+| framboise |
+| framboise |
+| framboise |
+| acidulé   |
++-----------+
+9 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT DISTINCT saveur FROM stagiaires INNER JOIN bonbons INNER JOIN manger WHERE manger.id_bonbon = bonbons.id_bonbon AND manger.id_stagiaire = stagiaires.id_stagiaire ;
++-----------+
+| saveur    |
++-----------+
+| fraise    |
+| citron    |
+| framboise |
+| acidulé   |
++-----------+
+4 rows in set (0.00 sec)
+
+MariaDB [haribo]> SELECT prenom MAX(quantite) FROM stagiaires INNER JOIN bonbons INNER JOIN manger WHERE manger.id_bonbon = bonbons.id_bonbon AND manger.id_stagiaire = stagiaires.id_stagiaire ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'MAX(quantite) FROM stagiaires INNER JOIN bonbons INNER JOIN manger WHERE manger.' at line 1
+MariaDB [haribo]> SELECT prenom, MAX(quantite) FROM stagiaires INNER JOIN bonbons INNER JOIN manger WHERE manger.id_bonbon = bonbons.id_bonbon AND manger.id_stagiaire = stagiaires.id_stagiaire ;
++--------+---------------+
+| prenom | MAX(quantite) |
++--------+---------------+
+| Arnaud |            24 |
++--------+---------------+
+1 row in set (0.00 sec)
+
+MariaDB [haribo]> SELECT prenom, MAX(quantite) FROM stagiaires INNER JOIN bonbons INNER JOIN manger WHERE manger.id_bonbon = bonbons.id_bonbon AND manger.id_stagiaire = stagiaires.id_stagiaire ;
