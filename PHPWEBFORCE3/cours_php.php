@@ -577,6 +577,20 @@
               echo '</div>';
                       
          }
+         echo '<hr> <h2 class="display-4 text-center">Superglobales</h2><hr>';
+        //  les superglobales sont des variables de type ARRAY, elles sont accessibles de partout, c'est à la fois dans lespace global et local, elle permettent de vehiculer des données
+        /*
+        $_SERVER : véhicule les données lié au serveur
+        $_GET : véhicule les données transmit dans l'URL
+        $_POST : véhicule les données d'un formulaire
+        $_FILES : véhicule les données d'un fichier uploader
+        $_COOKIE : véhicule les données d'un fichier cookie
+        $_SESSION : véhicule les données d'un session en cours
+        elle s'appelent toujours avec le signe d'un '_' et toujours en majuscule
+        
+        */
+        echo'<pre>'; print_r($_SERVER); echo'</pre>';
+         
 
          ?>
 

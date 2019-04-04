@@ -11,16 +11,41 @@
 <body>
 <!-- Exo : réaliser un formulaire HTML avec les champs suivants : email, mot de passe et un bouton submit -->
 <div class="container">
-<h1 class="display-4 text-center">Formulaire 1</h1>
-<form class="col-md-6 offset-md-3">
+<h1 class="display-4 text-center">Formulaire 1</h1> <hr>
+<?php
+echo'<pre>'; print_r($_POST); echo'</pre>'; // permet d'observer les données saisies dans le formulaire qui vont se stocker directement dans la superglobale $_POST, les indices conrrespondent aux attributs 'name' du formulaire HTML
+
+// Exo: afficher les données saisie dans le formulaire en passant par la superglobale $_POST avec un affichage conventionnel(sans print_r ou var_dump)
+
+//on parcoure la superglobale $_POST de type array avec une boucle foreach
+
+foreach($_POST as $key => $value)
+{
+  echo "$key => $value <br>";
+}
+if($_POST){
+  echo "email => $_POST[email]<br>";
+echo "password: " .$_POST['password']."<br>";
+echo '<hr>';
+}
+
+// on extrait les valeurs une par une en passant par la superglobale $_POST en crochetant aux differents indices
+// sans la condition IF, au premier chargement de la page, nous avons 2 erreurs 'undefined', c'est dû au fait que le formulaire n'a pas été validé et donc les indices 'email' et 'password' ne sont pas reconnu
+// Si la condition IF est vérifiée, si elle renvoi 'true', cela veut dire que l'on a soumis le formulaire et que les indices 'email' et 'password' sont bien détectés.
+
+
+?>
+
+<form class="col-md-4 offset-md-4" method="post" action=""><!-- method:comment vont circuler les données/ action:url de destination-->
   <div class="form-group">
-    <label for="exampleInputEmail1">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    <label for="email">Email address</label>
+    <input type="text" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" name="email">
+    <!--il ne faut surtt pas oublier les attributs name sur le formulaire html, sinon aucune donnée saisie ne sera récupéré en php-->
+    
   </div>
   <div class="form-group">
-    <label for="exampleInputPassword1">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+    <label for="password">Password</label>
+    <input type="text" class="form-control" id="password" placeholder="Password" name="password">
   </div>
   <div class="form-group form-check">
     <input type="checkbox" class="form-check-input" id="exampleCheck1">
