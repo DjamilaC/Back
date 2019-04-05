@@ -44,6 +44,9 @@ if($_POST){
         if(empty($_POST['nom'])){
             $error.='<div class="com-md-4 offset-md-4 alert alert-danger text-center text-dark">Le champs Nom est obligatoire!! </div>';  
         }
+        if(empty($_POST['prenom'])){
+          $error.='<div class="com-md-4 offset-md-4 alert alert-danger text-center text-dark">Le champs Nom est obligatoire!! </div>';  
+      }
 
         if(!preg_match('#^[0-9]{10}+$#', $_POST['tel']))
         {
