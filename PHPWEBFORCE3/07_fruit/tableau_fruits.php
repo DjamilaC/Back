@@ -7,6 +7,28 @@
     <title>Document</title>
 </head>
 <body>
+<?php
+$fruit = array("cerises", "bananes", "pommes", "peches");
+$poids = array("100", "500", "1000", "1500", "2000", "3000", "5000", "10000" );
+
+echo '<div class="col-md-4 offset-md-4 alert alert-success text-center mx-auto">';
+foreach($fruit as  $value)
+{
+    echo "$value<br>";
+}
+echo'</div>';
+foreach($poids as $value)
+{
+    echo "$value<br>";
+}
+echo'</div>';
+
+
+
+
+?>
+
+
     <!--  
         1- Déclarer un tableau ARRAY avec tout les fruits
         2- Déclarer un tableau ARRAY avec les poids suivants : 100, 500, 1000, 1500, 2000, 3000, 5000, 10000.
