@@ -589,10 +589,47 @@
         elle s'appelent toujours avec le signe d'un '_' et toujours en majuscule
         
         */
-        echo'<pre>'; print_r($_SERVER); echo'</pre>';
-         
 
+
+        echo'<pre>';
+         print_r($_SERVER);
+          echo'</pre>';
+          echo '<hr> <h2 class="display-4 text-center">Classe et Objet</h2><hr>';
+         // un objet est un autre type de données. un peu à la manière
+         // Cependant , celà va beaucoup plus loin car on peut y déclarer des variables (appelée : attribut ou propriété) mais aussi des fonctions (appelée : méthodes).
+        // Une classe est un peu comme un plan de construction, qui regroupe des données
+         // par convention la première lettre du nom de la class, est toujour en majuscule 
+
+
+         class Etudiant
+         {
+            public $prenom = 'Djamila'; // public permet de préciser que l'element est accessible de partt( il ya aussi protecteed  et private)
+            public $age = 38;
+            public function pays()
+            {
+                return 'France';
+            }
+
+         }
+         $objet = new Etudiant; // new permet d'instancier la class etudiant  et d'en faire un objet.$objet est un exemplaire de la class etudiant, c'est un enfant de la classe
+         // pour exploiter les données declarées dans la classe, il faut créer un instance / un objet de la classe
+
+         echo '<pre>'; var_dump($objet); echo'</pre>';
+         // var_dump permet d'observer que l'on a bien un objet issu de la classe Etudiant à l'identifiant 1 et on observe auss les propriétés (variables) déclarés dans la classe
+         
+         echo '<pre>'; var_dump(get_class_methods($objet)); echo'</pre>';
+
+         // on pioche dans un array avec les crochets '[]' / on pioche dans un objet toujours avec une flèche'->'
+         echo "je m'apelle :". $objet->prenom . '<hr>';
+         // en piochant dans l'objet, cela nous permet d'atteindre la proprité $prenom déclarée dans la classe
+         echo "mon age est :". $objet->age . '<hr>';
+         echo "j'habite en :". $objet->pays() . '<hr>';
+
+
+         
          ?>
+
+         
 
 
 
