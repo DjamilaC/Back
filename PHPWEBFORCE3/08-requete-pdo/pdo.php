@@ -120,8 +120,25 @@
                 }
                 echo '</div>';
             }
-                      
+            echo '<hr><h2 class="diplay-4 text-center">06. PDO : QUERY + SELECT + FETCH + BDD  </h2><hr>';  
 
+            // Exo : afficher la liste des bases de données, puis les mettre dans une liste ul li
+
+            $resultat = $pdo->query("SHOW DATABASES");
+            $donnee = $resultat->fetchALL(PDO::FETCH_ASSOC);
+            echo "<pre>"; print_r($donnee); echo"</pre>";
+            echo '<ul>';
+            foreach($donnee as $key=> $tab1)
+            {
+                foreach($tab1 as $key2=> $value){
+                    echo  '<li>';  echo $donnee; echo '</li>';
+                }
+            
+
+              }
+            
+            echo'</ul>';
+            
 
 
 
