@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>PDO</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
@@ -55,6 +55,10 @@
         echo "nombre d'enregistrements affecté(s) par DELETE : $resultat<br>";
 
         echo '<hr><h2 class="diplay-4 text-center">03. PDO : SELECT + FETCH_ASSOC (1 resultat)</h2><hr>';
+
+        // requete selection -> query() -> retour objet PDOStatements (inexploitable)
+        // pour exploiter le resultat -> asocier une methode fetch()/fetchall
+        
 
         $result = $pdo->query("SELECT * FROM employes WHERE id_employes= 415");
         echo '<pre>'; var_dump($result); echo '</pre>';
@@ -124,21 +128,129 @@
 
             // Exo : afficher la liste des bases de données, puis les mettre dans une liste ul li
 
-            $resultat = $pdo->query("SHOW DATABASES");
+            $resultat = $pdo->query("SHOW DATABASES");// je cree ma variable resultat j'appelle mon objet pdo je pioche sur query
             $donnee = $resultat->fetchALL(PDO::FETCH_ASSOC);
             echo "<pre>"; print_r($donnee); echo"</pre>";
             echo '<ul>';
             foreach($donnee as $key=> $tab1)
             {
                 foreach($tab1 as $key2=> $value){
-                    echo  '<li>';  echo $donnee; echo '</li>';
+                    echo  '<li>'; 
+                     echo "$key2 : $value";
+                      echo '</li>';
                 }
             
 
               }
             
+            echo'</ul class="col-md-4 offset-md-4 mx-auto list-group text-center">';
+
+            // 2ème solution
+            $resultat = $pdo->query("SHOW DATABASES");
+            echo "<pre>"; print_r($donnee); echo"</pre>";
+            echo '<ul>';
+            while($donnee = $resultat->fetch(PDO::FETCH_ASSOC))
+            {
+                echo "<pre>"; print_r($donnee); echo"</pre>";
+                echo  '<li class="list-group-item">'. $donnee['Database']. '</li>'; // on va crocheter à l'indice [Database] pour afficher le nom de la BDD
+
+            }
             echo'</ul>';
+
+            echo '<hr><h2 class="diplay-4 text-center">07. PDO : QUERY + TABLE  </h2><hr>'; 
+            $resultat = $pdo->query("SELECT * FROM employes");
+
+            echo '<table class="table table-bordered text-center"><tr>'; 
+            for($i =0; $i < $resultat->columnCount(); $i++)
+            {
+                $colonne = $resultat->getColumnMeta($i);
+                // echo '<pre>'; print_r($colonne);   echo '</pre>';
+                /*
+                columnCount() est une methode issue de la classe PDOStatement qui retourne le nombre de colonnes selectionnes via la requete de selection, dans notre cas retourne integer 7, donc la boucle for tourne 7 fois, autant de fois qu'il ya de colonnes
+
+                getColumns() est une methode issue de la classe PDOStatement qui permet de recolter les informations des champs/colonne selectionnés 
+                */
+                echo "<th>$colonne[name]</th>"; // on va crocheter à l'indivce [name] pour afficher en entete le nom de la colonne par tour de boucle
+
+            }
+            echo'</tr>';
+            // $employe resceptionne un tableau ARRAY par employé par tour de boucle
+            while($employe = $resultat->fetch(PDO::FETCH_ASSOC))
+            {
+                echo '<pre>'; print_r($employe); echo '</pre>';
+                echo '</tr>';
+                foreach($employe as $value)
+                {
+                    echo "<td>$value</td>";
+                }
+            }
+            echo'</table>';
+
+            //Exo: faire la même chose en utilisant la méthode fetchAll
+
+            $resultat = $pdo->query("SELECT * FROM employes");// je cree ma variable resultat j'appelle mon objet pdo je pioche sur query
+            $employes = $resultat->fetchALL(PDO::FETCH_ASSOC);
             
+            
+            // echo "<pre>"; print_r($employe); echo"</pre>";
+            echo '<table class="table table-bordered text-center"><tr>'; 
+             foreach($employes[0] as $key => $value )
+             {
+                echo "<th>$key</th>";
+             }  
+                echo '</tr>';
+
+                foreach($employes as $liste)
+                {
+                    echo '<tr>';
+                    foreach($liste as $infos)
+                    {
+                      echo "<td>$infos</td>";  
+                    }
+                    echo '</tr>';
+                 }
+            
+
+             
+              echo'</table>';
+
+              echo '<hr><h2 class="diplay-4 text-center">08. PDO : PREPARE + BINDVALUE + EXECUTE  </h2><hr>'; 
+              //LES REQUETES PRPARES permettent de formuler une seule fois la requete et d'executer autant de fois que souhaité
+              // les requetes préparées permettent de parer aux injections SQL, cela permet de proteger les reqyetes SQL
+              // 3 cycles dans une requete: analyse /interpretation/ execution
+
+              $resultat = $pdo->prepare("SELECT * FROM employes WHERE nom = :nom"); // ici on prépare la requete mais à aucun moment ici elle n'est executée
+              // :nom --> marquer nominatif que l'on peut comparer à une boite ou un tampon
+
+              echo '<pre>'; print_r($resultat); echo'</pre>';
+              $resultat->bindValue(':nom', 'chabane', PDO::PARAM_STR);// bindValue() --> méthode PDOStatement. Elle permet d'associer une valeur au marqueur nominatif ':nom'
+              // arguments bindValue(nom_du_marqueur, valeur, type)
+              // A ce stade la requete n'a toujours pas été executé
+              $resultat->execute();// méthode PDOStatement / permet d'executer le requete préparée
+              echo '<pre>'; print_r($resultat); echo'</pre>';
+
+              //Exo : afficher le resultat de la requete préparée à l'aide de la methode et de la boucle
+
+              $employe = $resultat->fetch(PDO::FETCH_ASSOC);
+
+              echo '<pre>'; print_r($employe); echo '</pre>';
+
+              echo'<div class="col-md-4 offset-md-4 mx-auto alert alert-info text-center">';
+              foreach($employe as $key=> $value)
+              {
+                  echo "$key : $value<hr>";
+              }
+              echo '</div><hr>';
+
+              //----------------------------------------------------------------------
+
+              $nom = 'Dubar';
+              $resultat->bindValue(':nom', $nom, PDO:: PARAM_STR); // on change la valeur du marqueur sans avoir à reformuler la requete SQL
+
+              $resultat->execute();// on execute la requete
+              
+              $employe = $resultat->fetch(PDO::FETCH_ASSOC);
+              echo '<pre>'; print_r($employe); echo '</pre>';
 
 
 
