@@ -37,8 +37,12 @@
 
     // 5. Requete SQL d'enregistrement (INSERT)
     extract($_POST);// permet de transformer chaque indice du formulaire en valeur
-    if($_POST)
-    {
+    if($_POST){
+    foreach($_POST as $key => $value)
+        {
+            $_POST[$key] = strip_tags($value); // on passe en revue le formulaire en executant la fonction strip_tags sur chaque valeur saisie du formulaire
+        }
+    
         // $resultat = $bdd->exec("INSERT INTO comentaire (pseudo, dateEnregistrement, message) VALUES ('$pseudo', NOW(), '$message')");
         // echo "Nombre d'enregistrements : $resultat<br>";
         /*
@@ -55,7 +59,12 @@
             body{
                 display: none;}
                 </style>
+                pour parer aux failles XSS, il existe plusieurs fonctions prédéfinies : 
+                - stri_tags() : permet de supprimer les balises HTML
+                - htmlspecialchars() : permet de rendre innoffensives les balises HTML
+                - htmlentities() : permet de convertir les balises MTML
         */
+        
         $req = "INSERT INTO comentaire (pseudo, dateEnregistrement, message) VALUES (:pseudo, NOW(), :message)";
         echo $req;
         $resultat = $bdd->prepare("INSERT INTO comentaire (pseudo, dateEnregistrement, message) VALUES (:pseudo, NOW(), :message)");
