@@ -27,9 +27,20 @@
  -->
 
  <?php
-
- // 2. connexion à la base de données BDD
     $bdd = new PDO('mysql:host=localhost;dbname=tchat', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING, PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
+
+    foreach($_POST as $key => $value)
+    {
+        // $_POST[']
+        $_POST[$key] = strip_tags(trim($value)); // on passe en revue le formulaire en executant la fonction strip_tags sur chaque valeur saisie du formulaire
+        // trim() est une fonction prédéfinie qui supprime les espaces en debut et fin de chaine
+    }
+
+    if($_POST){
+        
+        
+ // 2. connexion à la base de données BDD
+    
 
    // 4. Récupération et affichage des saisies en PHP ($_POST)
 
@@ -37,12 +48,7 @@
 
     // 5. Requete SQL d'enregistrement (INSERT)
     extract($_POST);// permet de transformer chaque indice du formulaire en valeur
-    if($_POST){
-    foreach($_POST as $key => $value)
-        {
-            $_POST[$key] = strip_tags($value); // on passe en revue le formulaire en executant la fonction strip_tags sur chaque valeur saisie du formulaire
-        }
-    
+   
         // $resultat = $bdd->exec("INSERT INTO comentaire (pseudo, dateEnregistrement, message) VALUES ('$pseudo', NOW(), '$message')");
         // echo "Nombre d'enregistrements : $resultat<br>";
         /*
@@ -64,16 +70,18 @@
                 - htmlspecialchars() : permet de rendre innoffensives les balises HTML
                 - htmlentities() : permet de convertir les balises MTML
         */
+        // le fait de preparer le requete permet de parer aux injections sql
         
-        $req = "INSERT INTO comentaire (pseudo, dateEnregistrement, message) VALUES (:pseudo, NOW(), :message)";
-        echo $req;
+  
+        
         $resultat = $bdd->prepare("INSERT INTO comentaire (pseudo, dateEnregistrement, message) VALUES (:pseudo, NOW(), :message)");
-            $resultat->bindValue(':pseudo', $pseudo, PDO::PARAM_STR);
-            $resultat->bindValue(':message', $message, PDO::PARAM_STR);
-            $resultat->execute();
+        $resultat->bindValue(':pseudo', $pseudo, PDO::PARAM_STR);
+        $resultat->bindValue(':message', $message, PDO::PARAM_STR);
+        $resultat->execute();
+
             // ces lignes de codes, la methode prepare(), permet d' éviter les injections sql des hackers
             // la ok'); DELETE FROM commentaire;( ne fonctionne plus ( supprimait les commentaires définitivement)
-    }
+    } 
     $resultat = $bdd->query("SELECT pseudo, message, DATE_FORMAT(dateEnregistrement, '%d/%m/%y')AS datefr, DATE_FORMAT(dateEnregistrement, '%H:%i:%S') AS heurefr FROM comentaire ORDER BY dateEnregistrement DESC");
 
     while($commentaire = $resultat->fetch(PDO::FETCH_ASSOC))
