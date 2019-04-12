@@ -37,9 +37,12 @@ $data_insert->execute();
 
 
 
+header("Location: connexion.php?action=validate");
+// redirige vers le fichier connexion, une fois validé
+// header est une fonction prédéfinie, qui permet d' effectuer une redirection de page/ URL
 }
-
 require_once("include/header.php");
+
 ?>
 
 <!-- 
